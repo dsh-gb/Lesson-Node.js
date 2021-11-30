@@ -4,6 +4,7 @@
   "description": "Lesson GU Node.js",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/dsh-gb/Lesson-Node.js/issues"
   },
-  "homepage": "https://github.com/dsh-gb/Lesson-Node.js#readme"
+  "homepage": "https://github.com/dsh-gb/Lesson-Node.js#readme",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
 }
