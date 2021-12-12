@@ -39,9 +39,16 @@ const readStream = fs.createReadStream(
     }
 )
 
-// подписываемся на событие чтения файла
-readStream.on('data', () => {
-    console.log('READING FILE LOG'.green)
+// размер файла логов в байтах
+const statLogFile = fs.statSync(PATH_FILE_LOG)
+const sizeLogFile = statLogFile.size
+let sizeReading = 0
+
+// подписываемся на событие чтения файла и показываем прогресс чтения
+readStream.on('data', (chunk) => {
+    sizeReading += chunk.length
+    const percentReading = (sizeReading / sizeLogFile) * 100
+    console.log(`READING FILE LOG ${percentReading.toFixed(1)} %`.green)
 })
 
 // подписываемся на событие ошибки чтения файла
