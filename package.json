@@ -7,6 +7,9 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "reader": "index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dsh-gb/Lesson-Node.js.git"
@@ -18,6 +21,7 @@
   },
   "homepage": "https://github.com/dsh-gb/Lesson-Node.js#readme",
   "dependencies": {
-    "colors": "^1.4.0"
+    "colors": "^1.4.0",
+    "inquirer": "^8.2.0"
   }
 }
