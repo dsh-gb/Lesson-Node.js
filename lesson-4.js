@@ -56,7 +56,8 @@ function readDir(name, currentPath) {
             choices: fs.readdirSync(currentPath),
         }
     ]).then(({ name }) => {
-        currentPath = `${currentPath}\\${name}` // обновляем выбранный путь 
+        //currentPath = `${currentPath}\\${name}` // обновляем выбранный путь 
+        currentPath = path.join(currentPath, name) // обновляем выбранный путь
         try {
             if (isDir(currentPath)) {
                 readDir(name, currentPath)
@@ -79,7 +80,8 @@ inquirer.prompt([
     }
 ]).then(({ name }) => {
     try {
-        let currentPath = `${executionDir}\\${name}` // обновляем выбранный путь
+        // let currentPath = `${executionDir}\\${name}` // обновляем выбранный путь
+        let currentPath = path.join(executionDir, name) // обновляем выбранный путь
         if (isDir(name)) {
             readDir(name, currentPath) // вызываем ф-ю чтения директории
         } else if (isFile(name)) {
@@ -92,6 +94,3 @@ inquirer.prompt([
         console.error(`${err}`.inverse.red)
     }
 })
-
-// console.log(`Содержимое директoрии ${ name }: `.yellow)
-// console.log(explorerDir(name).join('\n').green)
