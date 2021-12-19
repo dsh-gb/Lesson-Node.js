@@ -31,3 +31,5 @@ $RECYCLE.BIN/
 
 # folder
 node_modules/
+log/
+file/
