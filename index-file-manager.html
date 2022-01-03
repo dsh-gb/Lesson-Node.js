@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>File manager</title>
+    <script src="https://cdn.socket.io/4.2.0/socket.io.min.js"
+        integrity="sha384-PiBR5S00EtOj2Lto9Uu81cmoyZqR57XcOna1oAuVuIEjzj0wpqDVfD0JA9eXlRsj"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="counterUser">Количество пользователей: </div>
+    <ul>ListContents</ul>
+    <script>
+        const socket = io('localhost:8888');
+        socket.on('connect', () => {
+            console.log('Connected Socket!');
+        });
+        const messageBlock = document.querySelector('#counterUser');
+
+        // подписываемся на событие подключения нового пользователя
+        socket.on('newUser', payload => {
+            messageBlock.innerText = `Количество пользователей: ${payload.clientsCount}`
+        });
+
+        // подписываемся на событие отключения пользователя
+        socket.on('disconectUser', payload => {
+            messageBlock.innerHTML = `Количество пользователей: ${payload.clientsCount}`
+        });
+    </script>
+</body>
+
+</html>

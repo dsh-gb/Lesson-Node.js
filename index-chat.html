@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Socket</title>
+    <script src="https://cdn.socket.io/4.2.0/socket.io.min.js"
+        integrity="sha384-PiBR5S00EtOj2Lto9Uu81cmoyZqR57XcOna1oAuVuIEjzj0wpqDVfD0JA9eXlRsj"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <input id="input" type="text" autofocus>
+    <button id="button">Send</button>
+    <div id="messages"></div>
+    <script>
+        const socket = io('localhost:8000');
+        socket.on('connect', () => {
+            console.log('Connected Socket!');
+        });
+        const input = document.querySelector('#input');
+        const sendButton = document.querySelector('#button');
+        const messageBlock = document.querySelector('#messages');
+
+        sendButton.addEventListener('click', () => {
+            const data = {
+                message: input.value,
+            };
+
+            socket.emit('client-msg', data); // генерируем событие сообщение от пользователя
+            input.value = '';
+        });
+
+        // подписываемся на событие сообщение от сервера
+        socket.on('server-msg', payload => {
+            messageBlock.insertAdjacentHTML('beforeend', `<div>userId: ${payload.id} message: ${payload.message}</div>`)
+        });
+
+        // подписываемся на событие подключения нового пользователя
+        socket.on('newUser', payload => {
+            messageBlock.insertAdjacentHTML('beforeend', `<div>Подключился новый пользователь с Id: ${payload.id}</div>`)
+            messageBlock.insertAdjacentHTML('beforeend', `<div>Количество пользователей: ${payload.clientsCount}</div>`)
+        });
+
+        // подписываемся на событие отключения пользователя
+        socket.on('disconectUser', payload => {
+            messageBlock.insertAdjacentHTML('beforeend', `<div>Отключился пользователь с Id: ${payload.id}</div>`)
+            messageBlock.insertAdjacentHTML('beforeend', `<div>Количество пользователей: ${payload.clientsCount}</div>`)
+        });
+
+    </script>
+</body>
+
+</html>
